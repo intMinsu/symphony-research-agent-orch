@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "command": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Command",
+      "type": "array"
+    },
+    "evidence": {
+      "default": "help",
+      "enum": [
+        "help",
+        "smoke"
+      ],
+      "title": "Evidence",
+      "type": "string"
+    },
+    "flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Flags",
+      "type": "array"
+    },
+    "missing": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing",
+      "type": "array"
+    },
+    "provider": {
+      "enum": [
+        "codex",
+        "claude"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "version": {
+      "default": "unknown",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "provider",
+    "command"
+  ],
+  "title": "Capabilities",
+  "type": "object"
+}

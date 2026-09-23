@@ -1,0 +1,310 @@
+{
+  "$defs": {
+    "Check": {
+      "additionalProperties": false,
+      "properties": {
+        "argv": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Argv",
+          "type": "array"
+        },
+        "timeout_seconds": {
+          "default": 300,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "argv"
+      ],
+      "title": "Check",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "idle_timeout_seconds": {
+          "default": 600,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Idle Timeout Seconds",
+          "type": "integer"
+        },
+        "max_attempts": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Attempts",
+          "type": "integer"
+        },
+        "max_concurrent_runs": {
+          "default": 1,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Max Concurrent Runs",
+          "type": "integer"
+        },
+        "max_output_bytes": {
+          "default": 16777216,
+          "maximum": 268435456,
+          "minimum": 4096,
+          "title": "Max Output Bytes",
+          "type": "integer"
+        },
+        "poll_seconds": {
+          "default": 30,
+          "maximum": 3600,
+          "minimum": 5,
+          "title": "Poll Seconds",
+          "type": "integer"
+        },
+        "run_timeout_seconds": {
+          "default": 3600,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Run Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "RunnerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "claude_tools": {
+          "items": {
+            "enum": [
+              "Read",
+              "Glob",
+              "Grep",
+              "Edit",
+              "Write",
+              "Bash"
+            ],
+            "type": "string"
+          },
+          "title": "Claude Tools",
+          "type": "array"
+        },
+        "codex_network_access": {
+          "default": false,
+          "title": "Codex Network Access",
+          "type": "boolean"
+        },
+        "command": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Command",
+          "type": "array"
+        },
+        "effort": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effort"
+        },
+        "env_passthrough": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Env Passthrough",
+          "type": "array"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "title": "RunnerConfig",
+      "type": "object"
+    },
+    "Selection": {
+      "additionalProperties": false,
+      "properties": {
+        "effort": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effort"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "provider": {
+          "default": "codex",
+          "enum": [
+            "codex",
+            "claude"
+          ],
+          "title": "Provider",
+          "type": "string"
+        }
+      },
+      "title": "Selection",
+      "type": "object"
+    },
+    "Tracker": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_authors": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Authors",
+          "type": "array"
+        },
+        "ready_label": {
+          "default": "agent-ready",
+          "title": "Ready Label",
+          "type": "string"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        },
+        "token_env": {
+          "default": "GITHUB_TOKEN",
+          "title": "Token Env",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository"
+      ],
+      "title": "Tracker",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_ref": {
+      "default": "main",
+      "title": "Base Ref",
+      "type": "string"
+    },
+    "checks": {
+      "patternProperties": {
+        "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$": {
+          "$ref": "#/$defs/Check"
+        }
+      },
+      "title": "Checks",
+      "type": "object"
+    },
+    "executor": {
+      "$ref": "#/$defs/Selection"
+    },
+    "git_author_email": {
+      "default": "research-agent@localhost",
+      "title": "Git Author Email",
+      "type": "string"
+    },
+    "git_author_name": {
+      "default": "Research Agent",
+      "title": "Git Author Name",
+      "type": "string"
+    },
+    "limits": {
+      "$ref": "#/$defs/Limits"
+    },
+    "max_changed_file_bytes": {
+      "default": 2000000,
+      "maximum": 100000000,
+      "minimum": 1,
+      "title": "Max Changed File Bytes",
+      "type": "integer"
+    },
+    "planner": {
+      "$ref": "#/$defs/Selection"
+    },
+    "protected_paths": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Protected Paths",
+      "type": "array"
+    },
+    "required_checks": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$",
+        "type": "string"
+      },
+      "title": "Required Checks",
+      "type": "array"
+    },
+    "runners": {
+      "additionalProperties": {
+        "$ref": "#/$defs/RunnerConfig"
+      },
+      "propertyNames": {
+        "enum": [
+          "codex",
+          "claude"
+        ]
+      },
+      "title": "Runners",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "tracker": {
+      "$ref": "#/$defs/Tracker"
+    }
+  },
+  "required": [
+    "tracker"
+  ],
+  "title": "Workflow",
+  "type": "object"
+}

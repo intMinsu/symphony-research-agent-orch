@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "EXP-001",
+  "revision": 1,
+  "title": "Add one reproducible evaluation ablation",
+  "kind": "experiment",
+  "objective": "Implement a bounded evaluation ablation and report results without changing the frozen baseline.",
+  "scope": {"include": ["src/evaluation/*", "tests/evaluation/*", "reports/EXP-001.md"], "exclude": ["data/*", "baselines/*"]},
+  "acceptance": [
+    {"id": "AC-1", "description": "A fixed-seed evaluation command is covered by tests.", "evidence": "The registered unit check passes and the report records the exact command and seed."},
+    {"id": "AC-2", "description": "The report distinguishes observed, negative, and inconclusive outcomes.", "evidence": "Human review of reports/EXP-001.md against the recorded dataset and metric definitions."}
+  ],
+  "check_ids": ["unit"],
+  "non_goals": ["Do not retrain the baseline or change its outputs.", "Do not upload datasets or large checkpoints."],
+  "stop_conditions": ["Required data is unavailable.", "The experiment requires an unapproved GPU job or broader scope."],
+  "research": {
+    "hypothesis": "Removing the selected component may change the evaluation metric; the direction is not assumed.",
+    "datasets": ["local-evaluation-dataset@REPLACE_WITH_VERSION"],
+    "seeds": [42],
+    "metrics": ["accuracy"],
+    "artifact_paths": ["reports/EXP-001.md"]
+  },
+  "execution": {"provider": "codex"},
+  "delivery": "draft_pr"
+}

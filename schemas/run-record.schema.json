@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "CheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "returncode": {
+          "title": "Returncode",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "returncode"
+      ],
+      "title": "CheckResult",
+      "type": "object"
+    },
+    "RunEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Changed Files",
+          "type": "array"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/CheckResult"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "cli_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cli Version"
+        },
+        "fingerprint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fingerprint"
+        },
+        "head_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Head Sha"
+        },
+        "human_acceptance_required": {
+          "const": true,
+          "default": true,
+          "title": "Human Acceptance Required",
+          "type": "boolean"
+        },
+        "usage": {
+          "additionalProperties": true,
+          "title": "Usage",
+          "type": "object"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
+        }
+      },
+      "title": "RunEvidence",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempt": {
+      "title": "Attempt",
+      "type": "integer"
+    },
+    "base_sha": {
+      "title": "Base Sha",
+      "type": "string"
+    },
+    "branch": {
+      "title": "Branch",
+      "type": "string"
+    },
+    "child_pid": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Child Pid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "effort": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effort"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error"
+    },
+    "evidence": {
+      "$ref": "#/$defs/RunEvidence"
+    },
+    "host": {
+      "title": "Host",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "issue_number": {
+      "title": "Issue Number",
+      "type": "integer"
+    },
+    "model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model"
+    },
+    "owner_pid": {
+      "title": "Owner Pid",
+      "type": "integer"
+    },
+    "policy_sha256": {
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "pr_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pr Url"
+    },
+    "provider": {
+      "enum": [
+        "codex",
+        "claude"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "session_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Session Id"
+    },
+    "spec_sha256": {
+      "title": "Spec Sha256",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "preparing",
+        "running",
+        "verifying",
+        "delivering",
+        "awaiting_review",
+        "failed",
+        "blocked",
+        "cancelled"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "workspace": {
+      "title": "Workspace",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "repository",
+    "issue_number",
+    "spec_sha256",
+    "policy_sha256",
+    "state",
+    "attempt",
+    "provider",
+    "workspace",
+    "branch",
+    "base_sha",
+    "owner_pid",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "RunRecord",
+  "type": "object"
+}
